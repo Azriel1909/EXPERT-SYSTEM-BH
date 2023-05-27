@@ -1,38 +1,71 @@
 % Knowledge Base
 % Define symptoms and their corresponding mental health disorders
 
+% Depression Symptoms
 symptom(fatigue).
 symptom(loss_of_interest).
 symptom(difficulty_sleeping).
-symptom(restlessness).
-symptom(elevated_mood).
-symptom(decreased_need_for_sleep).
 symptom(feelings_of_worthlessness).
 symptom(concentration_difficulties).
-symptom(irritability).
-symptom(racing_thoughts).
-% Add more symptoms 
+symptom(persistent_sadness).
+symptom(feelings_of_guilt).
+symptom(suicidal_thoughts).
 
-disorder(depression, [fatigue, loss_of_interest, difficulty_sleeping, feelings_of_worthlessness, concentration_difficulties]).
-disorder(anxiety, [fatigue, restlessness, irritability, concentration_difficulties]).
-disorder(bipolar, [elevated_mood, decreased_need_for_sleep, racing_thoughts]).
-% Add more disorders as needed
+% Depression Anxiety
+symptom(restlessness).
+symptom(irritability).
+symptom(feeling_nervous).
+symptom(trembling).
+symptom(feeling_weak).
+symptom(gastrointestinal_problems).
+symptom(hyperventilation).
+
+% Depression Bipolar
+symptom(elevated_mood).
+symptom(decreased_need_for_sleep).
+symptom(racing_thoughts).
+symptom(distractibility).
+symptom(poor_decision_making).
+symptom(unusual_talkativeness).
+
+disorder(depression).
+disorder(anxiety).
+disorder(bipolar).
+% Add more disorders 
 
 % Rules for diagnosis
-% Add more rules as needed
+% Add more rules 
 
 diagnose_patient(Symptoms, depression) :-
-    subset([fatigue, loss_of_interest, difficulty_sleeping], Symptoms).
+    member(fatigue, Symptoms),
+    member(loss_of_interest, Symptoms),
+    member(difficulty_sleeping, Symptoms),
+    member(feelings_of_worthlessness, Symptoms),
+    member(concentration_difficulties, Symptoms),
+    member(persistent_sadness, Symptoms),
+    member(feelings_of_guilt, Symptoms),
+    member(suicidal_thoughts, Symptoms).
 
 diagnose_patient(Symptoms, anxiety) :-
-    subset([fatigue, restlessness, irritability], Symptoms).
+    member(fatigue, Symptoms),
+    member(restlessness, Symptoms),
+    member(irritability, Symptoms),
+    member(feeling_nervous, Symptoms),
+    member(trembling, Symptoms),
+    member(feeling_weak, Symptoms),
+    member(gastrointestinal_problems, Symptoms),
+    member(hyperventilation, Symptoms).
 
 diagnose_patient(Symptoms, bipolar) :-
-    subset([elevated_mood, decreased_need_for_sleep, racing_thoughts], Symptoms).
+    member(elevated_mood, Symptoms),
+    member(decreased_need_for_sleep, Symptoms),
+    member(racing_thoughts, Symptoms),
+    member(distractibility, Symptoms),
+    member(poor_decision_making, Symptoms),
+    member(unusual_talkativeness, Symptoms),
 
 % User Interface
 % Define predicates for interacting with the user
-% Add more predicates as needed
 
 ask_symptom(Symptom) :-
     format('Do you have ~w? (yes/no) ', [Symptom]),
@@ -55,12 +88,13 @@ gather_symptoms_helper([_ | Rest], Symptoms) :-
 
 mental_health_diagnosis :-
     format('--- Mental Health Expert System ---~n'),
+    format('--- By Ximena Toledo Rivera ---~n'),
     format('Please answer the following questions:~n'),
     gather_symptoms(Symptoms),
     diagnose_patient(Symptoms, Disorder),
     format('Based on the symptoms provided, the possible diagnosis is: ~w~n', [Disorder]).
 
+
 % Sample Usage
 % Query mental_health_diagnosis to start the expert system
-
-?- mental_health_diagnosis.
+% ?- mental_health_diagnosis.
