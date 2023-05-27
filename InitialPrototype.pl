@@ -11,7 +11,7 @@ symptom(persistent_sadness).
 symptom(feelings_of_guilt).
 symptom(suicidal_thoughts).
 
-% Depression Anxiety
+% Anxiety Symptoms
 symptom(restlessness).
 symptom(irritability).
 symptom(feeling_nervous).
@@ -20,7 +20,7 @@ symptom(feeling_weak).
 symptom(gastrointestinal_problems).
 symptom(hyperventilation).
 
-% Depression Bipolar
+% Bipolar Symptoms
 symptom(elevated_mood).
 symptom(decreased_need_for_sleep).
 symptom(racing_thoughts).
@@ -31,10 +31,10 @@ symptom(unusual_talkativeness).
 disorder(depression).
 disorder(anxiety).
 disorder(bipolar).
-% Add more disorders 
+% Add more disorders
 
 % Rules for diagnosis
-% Add more rules 
+% Add more rules
 
 diagnose_patient(Symptoms, depression) :-
     member(fatigue, Symptoms),
@@ -88,12 +88,10 @@ gather_symptoms_helper([_ | Rest], Symptoms) :-
 
 mental_health_diagnosis :-
     format('--- Mental Health Expert System ---~n'),
-    format('--- By Ximena Toledo Rivera ---~n'),
     format('Please answer the following questions:~n'),
     gather_symptoms(Symptoms),
     diagnose_patient(Symptoms, Disorder),
     format('Based on the symptoms provided, the possible diagnosis is: ~w~n', [Disorder]).
-
 
 % Sample Usage
 % Query mental_health_diagnosis to start the expert system
