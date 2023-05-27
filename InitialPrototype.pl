@@ -62,7 +62,7 @@ diagnose_patient(Symptoms, bipolar) :-
     member(racing_thoughts, Symptoms),
     member(distractibility, Symptoms),
     member(poor_decision_making, Symptoms),
-    member(unusual_talkativeness, Symptoms),
+    member(unusual_talkativeness, Symptoms).
 
 % User Interface
 % Define predicates for interacting with the user
