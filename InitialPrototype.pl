@@ -88,6 +88,7 @@ gather_symptoms_helper([_ | Rest], Symptoms) :-
 
 mental_health_diagnosis :-
     format('--- Mental Health Expert System ---~n'),
+    format('--- By Ximena Toledo Rivera ---~n'),
     format('Please answer the following questions:~n'),
     gather_symptoms(Symptoms),
     diagnose_patient(Symptoms, Disorder),
