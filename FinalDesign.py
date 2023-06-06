@@ -3,19 +3,19 @@ import networkx as nx #Libreria para grafos y redes (markov)
 #-------------------------------------------------------------------------- REGLAS DE INFERENCIA
 reglas = [
     #Regla 1 => Si el paciente tiene cambios de ánimo y dificultad para dormir, entonces puede tener depresión
-    (["cambios_de_animo", "dificultad_para_dormir"], "Depresion"), 
+    (["cambios de animo", "dificultad para dormir"], "Depresion"), 
 
     #Regla 2 => Si el paciente presenta ansiedad y ataques de pánico, entonces puede tener ansiedad
-    (["preocupacion_extrema", "ataques_de_panico"], "Trastorno de ansiedad"),
+    (["preocupacion extrema", "ataques de panico"], "Trastorno de ansiedad"),
 
     #Regla 3 => Si el paciente muestra episodios_de_tristeza_extrema y aislamiento social, entonces puede  tener trastorno bipolar
-    (["episodios_de_tristeza_extrema", "episodios_de_euforia"], "Trastorno bipolar"),
+    (["episodios de tristeza extrema", "episodios de euforia"], "Trastorno bipolar"),
 
     #Regla 4 => Si el paciente tiene alucinaciones y delirios, entonces puede tener esquizofrenia
-    (["alucinaciones", "delirios"], "Esquizofrenia"),
+    (["alucinaciones", "delirios", "amnesia", "aislamiento social", "arranques de ira", "comportamientos impulsivos"], "Esquizofrenia"),
 
     #Regla 5 => Si el paciente tiene dificultades de concentración y falta de interés, entonces puede tener TDAH (Trastorno por déficit de atención e hiperactividad)
-    (["dificultades_de_concentracion", "falta_de_interes"], "TDAH_Trastorno por Déficit de Atención e Hiperactividad"),
+    (["dificultades de concentracion", "falta de interes"], "TDAH_Trastorno por Déficit de Atención e Hiperactividad"),
 
     #Regla 6 => Si el paciente muestra comportamiento compulsivo y obsesiones, podría tener trastorno obsesivo compulsivo (TOC)
     (["comportamiento_compulsivo", "obsesiones"], "TOC_Trastorno Obsesivo Compulsivo")   
@@ -65,7 +65,7 @@ red_markov.add_edge("toc", "tdah", weight=0.1)
 
 
 def diagnostico_RI(sintomas): #Función de diagnostico con reglas de inferencia
-    for condiciones, resultado in reglas: #Se aplicaran reglas de inferencia para el diagnostivo
+    for condiciones, resultado in reglas: #Se aplicaran reglas de inferencia para el diagnostico
         if all(sintoma in sintomas for sintoma in condiciones):
             return resultado
     
@@ -73,13 +73,13 @@ def diagnostico_RI(sintomas): #Función de diagnostico con reglas de inferencia
 
 def diagnostico_RM(sintomas): #Función de diagnostico con redes de markov
     probabilidades = {} #Se calcula el diagnostico por medio de la probabilidad de cambio de transición
-    estado_actual = "normal"
+    estado_actual = "normal" #el estado inicial es normal
 
     for sintoma in sintomas:
-        prox_estado = red_markov.successors(estado_actual)
+        prox_estado = red_markov.successors(estado_actual) #Para obtener el siguiente estado
         probabilidades = {}
         for estado in prox_estado:
-            probabilidades[estado] = red_markov[estado_actual][estado]['weight']
+            probabilidades[estado] = red_markov[estado_actual][estado]['weight'] #Toma la probabilidad indicada en la creacion de la red de markov
         estado_actual = max(probabilidades, key=probabilidades.get)
     
     return estado_actual
@@ -87,7 +87,7 @@ def diagnostico_RM(sintomas): #Función de diagnostico con redes de markov
 def diagnostico_main(): #Función para imprimir las preguntas y el diagnostico
     sintomas = []
     
-    print("MINI S.E. MENTAL HEALT")
+    print("\n\nMINI S.E. MENTAL HEALT")
     print("Ingrese los síntomas uno por uno. Ingrese 'fin' al terminar.")
     
     while True:
@@ -99,5 +99,6 @@ def diagnostico_main(): #Función para imprimir las preguntas y el diagnostico
     diagnostico = diagnostico_RI(sintomas)
     
     print("El diagnóstico para los síntomas ingresados es:", diagnostico)
+    print("\n\n\n")
     
 diagnostico_main()
